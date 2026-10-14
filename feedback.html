@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oncoscope - Formulaire de Feedback & Signalement</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        medical: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#035388',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        sage: {
+                            50: '#f4f7f6',
+                            100: '#e3ebe8',
+                            500: '#4a7c59',
+                            600: '#3b6346',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .star-rating input[type="radio"] {
+            display: none;
+        }
+        .star-rating label {
+            cursor: pointer;
+            transition: color 0.2s ease-in-out, transform 0.1s ease-in-out;
+        }
+        .star-rating label:hover,
+        .star-rating label:hover ~ label,
+        .star-rating input[type="radio"]:checked ~ label {
+            color: #f59e0b;
+        }
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+        }
+        .star-rating label:hover {
+            transform: scale(1.15);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- HEADER / BANNER -->
+    <header class="bg-gradient-to-r from-medical-900 via-medical-800 to-teal-900 text-white shadow-lg sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white/10 p-2.5 rounded-xl backdrop-blur-md border border-white/20">
+                    <i data-lucide="activity" class="w-8 h-8 text-teal-300"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-white flex items-center gap-2">
+                        Oncoscope
+                        <span class="text-xs bg-teal-400/20 text-teal-200 border border-teal-300/30 px-2 py-0.5 rounded-full font-medium">v2.4</span>
+                    </h1>
+                    <p class="text-medical-100 text-sm font-light">Espace de Feedback, Suggestions & Signalements</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" 
+                   class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white text-sm font-medium px-4 py-2 rounded-lg transition-all border border-white/10 hover:border-white/30 backdrop-blur-sm">
+                    <i data-lucide="github" class="w-4 h-4"></i>
+                    <span>Dépôt GitHub</span>
+                </a>
+                <a href="https://github.com/issues" target="_blank" rel="noopener noreferrer" 
+                   class="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-white text-sm font-medium px-4 py-2 rounded-lg transition-all shadow-sm">
+                    <i data-lucide="bug" class="w-4 h-4"></i>
+                    <span>GitHub Issues</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full">
+
+        <!-- INTRO BANNER -->
+        <div class="mb-8 text-center sm:text-left bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200/80">
+            <h2 class="text-2xl font-bold text-slate-900 mb-2">Votre avis fait progresser la recherche & la pratique clinique</h2>
+            <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+                L'application <strong class="text-medical-700">Oncoscope</strong> est conçue pour et par des professionnels de santé. Vos retours d'expérience, idées d'amélioration et signalements d'anomalies sont essentiels pour garantir un outil fiable, ergonomique et adapté à votre quotidien en oncologie.
+            </p>
+        </div>
+
+        <!-- AVERTISSEMENT RGPD / DONNÉES PATIENTS -->
+        <div class="mb-8 bg-amber-50 border-l-4 border-amber-500 p-5 rounded-r-xl shadow-sm">
+            <div class="flex items-start gap-3.5">
+                <div class="text-amber-600 shrink-0 mt-0.5">
+                    <i data-lucide="shield-alert" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-amber-900 uppercase tracking-wider">Avertissement de Sécurité & RGPD</h3>
+                    <p class="mt-1 text-sm text-amber-800 leading-relaxed">
+                        <strong>ATTENTION :</strong> Conformément à la réglementation sur la protection des données de santé (RGPD / HDS), 
+                        <span class="underline decoration-amber-500 decoration-2 font-semibold">aucune donnée nominative patient, ni aucun dossier médical à caractère personnel</span> 
+                        ne doit être partagé dans ce formulaire. Veillez à anonymiser intégralement vos descriptions de cas ou captures d'écran.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FORMULAIRE DE FEEDBACK -->
+        <form id="feedbackForm" onsubmit="handleSubmit(event)" class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 sm:p-10 space-y-8">
+            
+            <!-- SECTION 1: PROFIL UTILISATEUR -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-2 border-b border-slate-100 pb-3">
+                    <i data-lucide="user" class="w-5 h-5 text-medical-600"></i>
+                    1. Votre Profil
+                </h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="fullName" class="block text-sm font-medium text-slate-700 mb-1">Nom & Prénom <span class="text-slate-400 font-normal">(Optionnel)</span></label>
+                        <input type="text" id="fullName" name="fullName" placeholder="Dr. Jean Dupont"
+                               class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-medical-500 focus:border-medical-500 outline-none transition-all text-sm">
+                    </div>
+
+                    <div>
+                        <label for="role" class="block text-sm font-medium text-slate-700 mb-1">Rôle / Spécialité <span class="text-red-500">*</span></label>
+                        <select id="role" name="role" required
+                                class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-medical-500 focus:border-medical-500 outline-none transition-all text-sm bg-white">
+                            <option value="" disabled selected>Sélectionnez votre rôle</option>
+                            <option value="oncologue">Oncologue / Hématologue</option>
+                            <option value="generaliste">Médecin Généraliste</option>
+                            <option value="chirurgien">Chirurgien</option>
+                            <option value="soignant">Infirmier(ère) / Personnel Soignant</option>
+                            <option value="chercheur">Chercheur / Biologiste</option>
+                            <option value="interne">Interne / Étudiant</option>
+                            <option value="autre">Autre professionnel de santé</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="email" class="block text-sm font-medium text-slate-700 mb-1">Adresse Email Pro <span class="text-slate-400 font-normal">(Si réponse souhaitée)</span></label>
+                    <input type="email" id="email" name="email" placeholder="j.dupont@hopital.fr"
+                           class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-medical-500 focus:border-medical-500 outline-none transition-all text-sm">
+                </div>
+            </div>
+
+            <!-- SECTION 2: CATEGORISATION -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-2 border-b border-slate-100 pb-3">
+                    <i data-lucide="tag" class="w-5 h-5 text-medical-600"></i>
+                    2. Nature du Feedback
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="type" class="block text-sm font-medium text-slate-700 mb-1">Type de Retour <span class="text-red-500">*</span></label>
+                        <select id="type" name="type" required
+                                class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-medical-500 focus:border-medical-500 outline-none transition-all text-sm bg-white">
+                            <option value="" disabled selected>Choisir une catégorie</option>
+                            <option value="bug">🐛 Rapport de Bug / Dysfonctionnement</option>
+                            <option value="suggestion">💡 Suggestion d'amélioration</option>
+                            <option value="feature">✨ Demande de fonctionnalité</option>
+                            <option value="testimonial">💬 Retour d'expérience / Témoignage</option>
+                            <option value="other">❓ Autre</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="priority" class="block text-sm font-medium text-slate-700 mb-1">Niveau d'Urgence / Priorité <span class="text-red-500">*</span></label>
+                        <select id="priority" name="priority" required
+                                class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-medical-500 focus:border-medical-500 outline-none transition-all text-sm bg-white">
+                            <option value="low">🟢 Faible (Confort, détail visuel)</option>
+                            <option value="medium" selected>🟡 Moyen (Gêne mineure dans le flux d'utilisation)</option>
+                            <option value="high">🟠 Élevé (Fonctionnalité clé bloquée)</option>
+                            <option value="critical">🔴 Critique / Urgent (Anomalie majeure)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- NOTATION PAR ETOILES -->
+                <div class="pt-2">
+                    <label class="block text-sm font-medium text-slate-700 mb-2">Satisfaction globale quant à l'outil Oncoscope</label>
+                    <div class="flex items-center gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200/60">
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 étoiles"><i data-lucide="star" class="w-7 h-7 fill-current"></i></label>
+                            <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 étoiles"><i data-lucide="star" class="w-7 h-7 fill-current"></i></label>
+                            <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 étoiles"><i data-lucide="star" class="w-7 h-7 fill-current"></i></label>
+                            <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 étoiles"><i data-lucide="star" class="w-7 h-7 fill-current"></i></label>
+                            <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 étoile"><i data-lucide="star" class="w-7 h-7 fill-current"></i></label>
+                        </div>
+                        <span class="text-xs text-slate-500 font-medium">Évaluez de 1 à 5 étoiles</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: DETAIL DU MESSAGE -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-2 border-b border-slate-100 pb-3">
+                    <i data-lucide="message-square" class="w-5 h-5 text-medical-600"></i>
+                    3. Description de votre retour
+                </h3>
+
+                <div>
+                    <label for="subject" class="block text-sm font-medium text-slate-700 mb-1">Sujet / Titre <span class="text-red-500">*</span></label>
+                    <input type="text" id="subject" name="subject" required placeholder="Ex: Erreur lors de l'affichage de la courbe d'efficacité"
+                           class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-medical-500 focus:border-medical-500 outline-none transition-all text-sm">
+                </div>
+
+                <div>
+                    <label for="message" class="block text-sm font-medium text-slate-700 mb-1">Description détaillée <span class="text-red-500">*</span></label>
+                    <textarea id="message" name="message" rows="5" required placeholder="Décrivez la situation, le comportement attendu et les étapes pour reproduire..."
+                              class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-medical-500 focus:border-medical-500 outline-none transition-all text-sm"></textarea>
+                </div>
+
+                <div>
+                    <label for="logs" class="block text-sm font-medium text-slate-700 mb-1">Détails techniques / Logs / Captures textuelles <span class="text-slate-400 font-normal">(Optionnel)</span></label>
+                    <textarea id="logs" name="logs" rows="3" placeholder="Copiez-collez ici d'éventuels messages d'erreur ou informations d'environnement (navigateur, OS...)"
+                              class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-medical-500 focus:border-medical-500 outline-none transition-all text-sm font-mono text-xs bg-slate-50"></textarea>
+                </div>
+            </div>
+
+            <!-- ENGAGEMENT NON-DIVULGATION PATIENT -->
+            <div class="flex items-start gap-3 pt-2">
+                <input type="checkbox" id="rgpdCheck" required class="mt-1 rounded border-slate-300 text-medical-600 focus:ring-medical-500 w-4 h-4">
+                <label for="rgpdCheck" class="text-xs text-slate-600 leading-normal">
+                    Je confirme qu me suis assuré(e) de n'inclure <strong>aucune donnée à caractère personnel nominative ou de santé concernant des patients</strong> dans les informations transmises ci-dessus.
+                </label>
+            </div>
+
+            <!-- BOUTON DE SOUMISSION -->
+            <div class="pt-4">
+                <button type="submit" id="submitBtn" class="w-full sm:w-auto px-8 py-3.5 bg-medical-600 hover:bg-medical-700 text-white font-medium rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                    <i data-lucide="send" class="w-5 h-5"></i>
+                    <span>Transmettre mon retour</span>
+                </button>
+            </div>
+        </form>
+
+        <!-- FAQ SECTION -->
+        <section class="mt-16 space-y-6">
+            <div class="text-center sm:text-left">
+                <h3 class="text-xl font-bold text-slate-900 flex items-center justify-center sm:justify-start gap-2">
+                    <i data-lucide="help-circle" class="w-6 h-6 text-medical-600"></i>
+                    Foire Aux Questions (FAQ)
+                </h3>
+                <p class="text-slate-500 text-sm mt-1">Comment sont traitées vos retours et contributions sur Oncoscope.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200/80 shadow-sm">
+                    <h4 class="font-semibold text-slate-800 text-sm mb-2 flex items-center gap-2">
+                        <i data-lucide="database" class="w-4 h-4 text-teal-600"></i>
+                        Où vont mes retours ?
+                    </h4>
+                    <p class="text-slate-600 text-xs leading-relaxed">
+                        Chaque soumission génère un billet de suivi sécurisé. Les données sont analysées par l'équipe de développement médicale d'Oncoscope pour planifier les prochaines mises à jour.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-slate-200/80 shadow-sm">
+                    <h4 class="font-semibold text-slate-800 text-sm mb-2 flex items-center gap-2">
+                        <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-600"></i>
+                        Signalement critique ?
+                    </h4>
+                    <p class="text-slate-600 text-xs leading-relaxed">
+                        Pour toute anomalie bloquante en cours d'utilisation clinique, vous pouvez également utiliser directement le système d'<em>Issues GitHub</em> sur notre dépôt officiel.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-slate-200/80 shadow-sm">
+                    <h4 class="font-semibold text-slate-800 text-sm mb-2 flex items-center gap-2">
+                        <i data-lucide="code-2" class="w-4 h-4 text-indigo-600"></i>
+                        Puis-je contribuer ?
+                    </h4>
+                    <p class="text-slate-600 text-xs leading-relaxed">
+                        Absolument. Oncoscope est un projet ouvert aux contributions de chercheurs et développeurs. Visitez notre GitHub pour proposer des Pull Requests.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODALE DE CONFIRMATION JS -->
+    <div id="successModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 text-center space-y-4 shadow-2xl border border-slate-100 transform transition-all scale-95 opacity-0 duration-300" id="modalContent">
+            <div class="w-16 h-16 bg-teal-100 text-teal-600 rounded-full flex items-center justify-center mx-auto">
+                <i data-lucide="check-circle-2" class="w-10 h-10"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900">Merci pour votre retour !</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+                Votre contribution à l'application <strong>Oncoscope</strong> a bien été enregistrée. Elle nous aide à améliorer continuellement l'expérience des soignants et chercheurs.
+            </p>
+            <div class="pt-2">
+                <button onclick="closeModal()" class="w-full py-2.5 px-4 bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium rounded-xl transition-all">
+                    Fermer cette fenêtre
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 py-10 border-t border-slate-800 mt-16">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center space-x-3">
+                <i data-lucide="activity" class="w-6 h-6 text-teal-400"></i>
+                <span class="text-white font-semibold tracking-wide text-sm">Oncoscope Project</span>
+            </div>
+            <p class="text-xs text-slate-500 text-center md:text-left">
+                &copy; 2026 Oncoscope Initiative. Conçu pour le soutien à la décision oncologique. Pas de stockage de données nominatives.
+            </p>
+            <div class="flex gap-4 text-xs">
+                <a href="#" class="hover:text-white transition-colors">Confidentialité</a>
+                <a href="#" class="hover:text-white transition-colors">Mentions Légales</a>
+                <a href="https://github.com" class="hover:text-white transition-colors">GitHub Repository</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOCAL POUR INTERACTIVITÉ -->
+    <script>
+        // Initialisation des icônes Lucide
+        lucide.createIcons();
+
+        // Gestion de la soumission du formulaire
+        function handleSubmit(e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            const originalContent = submitBtn.innerHTML;
+
+            // Feedback visuel sur le bouton pendant l'envoi simulé
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>Envoi en cours...</span>
+            `;
+
+            // Simulation de requête réseau (API Call)
+            setTimeout(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalContent;
+
+                // Affichage de la modale de confirmation
+                showModal();
+
+                // Réinitialisation du formulaire
+                document.getElementById('feedbackForm').reset();
+            }, 1000);
+        }
+
+        // Fonctions de contrôle de la modale
+        function showModal() {
+            const modal = document.getElementById('successModal');
+            const content = document.getElementById('modalContent');
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('successModal');
+            const content = document.getElementById('modalContent');
+
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 200);
+        }
+    </script>
+</body>
+</html>
