@@ -1,0 +1,50 @@
+name: Publier le site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Générer les plateformes manquantes
+        run: |
+          if [ ! -d web ]; then
+            flutter create --project-name oncoscope --org fr.oncoscope --platforms=web .
+          fi
+
+      - run: flutter pub get
+      - run: flutter build web --release --base-href "/oncoscope/"
+
+      - name: Conserver les pages existantes
+        run: |
+          cp index.html build/web/confidentialite.html
+          cp feedback.html build/web/feedback.html
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/web
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
