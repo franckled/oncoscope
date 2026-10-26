@@ -16,7 +16,11 @@ void main() {
     await tester.pumpWidget(const OncoApp());
     await tester.pumpAndSettle();
 
+    await tester.ensureVisible(find.text('Je suis un professionnel de santé'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Je suis un professionnel de santé'));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Cancer du sein'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Cancer du sein'));
     await tester.pumpAndSettle();
@@ -29,7 +33,11 @@ void main() {
     await tester.pumpWidget(const OncoApp());
     await tester.pumpAndSettle();
 
+    await tester.ensureVisible(find.text('Je suis un particulier'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Je suis un particulier'));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Cancer du sein'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Cancer du sein'));
     await tester.pumpAndSettle();

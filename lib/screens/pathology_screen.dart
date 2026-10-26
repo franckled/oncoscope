@@ -17,7 +17,12 @@ class PathologyScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(pathology.name),
+          backgroundColor: pathologyColor(pathology.id),
+          foregroundColor: Colors.white,
           bottom: const TabBar(
+            labelColor: Colors.white,
+            unselectedLabelColor: Colors.white70,
+            indicatorColor: Colors.white,
             tabs: [
               Tab(icon: Icon(Icons.menu_book_outlined), text: 'Critères'),
               Tab(icon: Icon(Icons.fact_check_outlined), text: 'Évaluer un patient'),

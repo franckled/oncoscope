@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../data/public_flows.dart';
+import '../theme.dart';
 
 /// Résultat calculé à partir des réponses du questionnaire.
 class PublicOutcome {
@@ -108,9 +109,23 @@ class _PublicFlowScreenState extends State<PublicFlowScreen> {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final allAnswered = _answers.length == flow.questions.length;
+    final tone = pathologyColor(flow.pathologyId);
 
     return Scaffold(
-      appBar: AppBar(title: Text(flow.title)),
+      appBar: AppBar(
+        title: Text(flow.title),
+        backgroundColor: tone,
+        foregroundColor: Colors.white,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(5),
+          child: LinearProgressIndicator(
+            value: _answers.length / flow.questions.length,
+            minHeight: 5,
+            backgroundColor: Colors.white24,
+            color: Colors.white,
+          ),
+        ),
+      ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -147,6 +162,7 @@ class _PublicFlowScreenState extends State<PublicFlowScreen> {
           ),
           const SizedBox(height: 8),
           FilledButton.icon(
+            style: FilledButton.styleFrom(backgroundColor: tone),
             onPressed: _answers.isEmpty
                 ? null
                 : () => setState(() => _showResult = true),
@@ -171,12 +187,13 @@ class _PublicFlowScreenState extends State<PublicFlowScreen> {
   List<Widget> _group(String title, IconData icon, List<PublicQuestion> qs) {
     if (qs.isEmpty) return const [];
     final theme = Theme.of(context);
+    final tone = pathologyColor(flow.pathologyId);
     return [
       Padding(
         padding: const EdgeInsets.only(top: 12, bottom: 8),
         child: Row(
           children: [
-            Icon(icon, color: theme.colorScheme.primary),
+            Icon(icon, color: tone),
             const SizedBox(width: 8),
             Text(
               title,
@@ -189,6 +206,7 @@ class _PublicFlowScreenState extends State<PublicFlowScreen> {
       ),
       for (final q in qs) _QuestionCard(
         question: q,
+        tone: tone,
         answer: _answers[q.id],
         checks: _checks[q.id] ?? const <int>{},
         onAnswer: (a) => _set(q.id, a),
@@ -201,6 +219,7 @@ class _PublicFlowScreenState extends State<PublicFlowScreen> {
 class _QuestionCard extends StatelessWidget {
   const _QuestionCard({
     required this.question,
+    required this.tone,
     required this.answer,
     required this.checks,
     required this.onAnswer,
@@ -208,6 +227,7 @@ class _QuestionCard extends StatelessWidget {
   });
 
   final PublicQuestion question;
+  final Color tone;
   final Answer? answer;
   final Set<int> checks;
   final ValueChanged<Answer> onAnswer;
@@ -220,6 +240,15 @@ class _QuestionCard extends StatelessWidget {
 
     return Card(
       margin: const EdgeInsets.only(bottom: 10),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(18),
+        side: BorderSide(
+          color: answer == null
+              ? scheme.outlineVariant.withValues(alpha: 0.6)
+              : tone,
+          width: answer == null ? 1 : 1.6,
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(14),
         child: Column(

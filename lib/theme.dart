@@ -2,16 +2,72 @@ import 'package:flutter/material.dart';
 
 import 'data/models.dart';
 
+const Color kBrandTeal = Color(0xFF0E7C86);
+const Color kBrandDeep = Color(0xFF0B4F6C);
+const Color kBrandCoral = Color(0xFFE76F51);
+
 ThemeData buildTheme(Brightness brightness) {
   final scheme = ColorScheme.fromSeed(
-    seedColor: const Color(0xFF0B5C7D),
+    seedColor: kBrandTeal,
     brightness: brightness,
   );
+  final isLight = brightness == Brightness.light;
+  final background = isLight ? const Color(0xFFF2F8F8) : scheme.surface;
+
   return ThemeData(
     useMaterial3: true,
     colorScheme: scheme,
-    appBarTheme: const AppBarTheme(centerTitle: false),
+    scaffoldBackgroundColor: background,
+    appBarTheme: AppBarTheme(
+      centerTitle: false,
+      backgroundColor: background,
+      scrolledUnderElevation: 0,
+      surfaceTintColor: Colors.transparent,
+    ),
+    cardTheme: CardThemeData(
+      elevation: 0,
+      margin: EdgeInsets.zero,
+      color: isLight ? Colors.white : scheme.surfaceContainer,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(18),
+        side: BorderSide(color: scheme.outlineVariant.withValues(alpha: 0.6)),
+      ),
+    ),
+    filledButtonTheme: FilledButtonThemeData(
+      style: FilledButton.styleFrom(
+        minimumSize: const Size.fromHeight(52),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+      ),
+    ),
   );
+}
+
+/// Couleur d'identité de chaque cancer (assez foncée pour du texte blanc).
+Color pathologyColor(String id) {
+  switch (id) {
+    case 'sein':
+      return const Color(0xFFC2255C);
+    case 'ovaire':
+      return const Color(0xFF7B3FA0);
+    case 'prostate':
+      return const Color(0xFF1C5FBF);
+    case 'pancreas':
+      return const Color(0xFFC25E10);
+    case 'colon':
+      return const Color(0xFF7A4B2E);
+    case 'endometre':
+      return const Color(0xFF9C2F7D);
+    case 'estomac':
+      return const Color(0xFF2A7F4F);
+    case 'polypose':
+      return const Color(0xFF0B7285);
+    case 'rein':
+      return const Color(0xFFA52A2A);
+    default:
+      return kBrandTeal;
+  }
 }
 
 /// Couleur associée à un type de section (bleu = personnel, rose = familial,

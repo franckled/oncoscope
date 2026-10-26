@@ -185,6 +185,34 @@ class FootnoteText extends StatelessWidget {
   }
 }
 
+/// Pastille colorée portant l'icône d'un cancer.
+class PathologyTile extends StatelessWidget {
+  const PathologyTile({
+    super.key,
+    required this.id,
+    required this.icon,
+    this.size = 46,
+  });
+
+  final String id;
+  final IconData icon;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = pathologyColor(id);
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.14),
+        borderRadius: BorderRadius.circular(size * 0.32),
+      ),
+      child: Icon(icon, color: color, size: size * 0.55),
+    );
+  }
+}
+
 /// Copie [text] dans le presse-papiers et le confirme à l'écran.
 Future<void> copyText(BuildContext context, String text, String message) async {
   final messenger = ScaffoldMessenger.of(context);
