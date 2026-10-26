@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Générer les plateformes manquantes
+        run: |
+          if [ ! -d android ] || [ ! -d web ]; then
+            flutter create --project-name oncoscope --org fr.oncoscope --platforms=android,web .
+          fi
+
+      - run: flutter pub get
+      - run: flutter analyze --no-fatal-infos
+      - run: flutter test
+
+      - name: Build web
+        run: flutter build web --release
+
+      - name: Build APK
+        run: flutter build apk --release
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: oncoscope-web
+          path: build/web
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: oncoscope-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
