@@ -20,8 +20,9 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Je suis un professionnel de santé'));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('Cancer du sein'));
-    await tester.pumpAndSettle();
+
+    // La tuile est déjà visible : ne pas la faire défiler sous la barre
+    // d'application transparente.
     await tester.tap(find.text('Cancer du sein'));
     await tester.pumpAndSettle();
 
@@ -37,8 +38,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Je suis un particulier'));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('Cancer du sein'));
-    await tester.pumpAndSettle();
+
     await tester.tap(find.text('Cancer du sein'));
     await tester.pumpAndSettle();
 
